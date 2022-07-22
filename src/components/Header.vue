@@ -60,9 +60,24 @@ header {
         position: absolute;
         top: 0;
         left: 0;
-        width: 200px;
+        width: 250px;
         height: 100vh;
-        transform: translateX(-200px);
+        background: $white;
+        padding: 25px;
+        // transform: translateX(-250px);
+
+        nav {
+            margin-top: 50px;
+
+            ul li {
+                list-style-type: none;
+                margin: 23px 0;
+
+                a {
+                    text-decoration: none;
+                }
+            }
+        }
     }
     #primary-nav {
         display: flex;

@@ -15,15 +15,16 @@
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  font-family: 'Kumbh Sans', Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
+  // color: #2c3e50;
 }
 
 nav {
-  padding: 30px;
+  // padding: 30px;
 
   a {
     font-weight: bold;
