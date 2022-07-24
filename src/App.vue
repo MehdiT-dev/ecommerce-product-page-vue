@@ -13,6 +13,9 @@
   margin: 0;
   padding: 0;
 }
+body {
+  font-size: 0.85em;
+}
 
 #app {
   font-family: 'Kumbh Sans', Helvetica, Arial, sans-serif;
