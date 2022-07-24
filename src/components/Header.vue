@@ -1,11 +1,19 @@
 <script setup>
-//import {  } from 'vue';
+import { ref } from 'vue';
+
+const sideNav = ref();
+
+const toggleSideNav = function() {
+    sideNav.value.classList.toggle('open');
+    // console.log(sideNav.value);
+}
+
 </script>
 
 <template>
     <header role="banner">
-        <div id="side-nav">
-            <p id="close-btn" @click="closeSideNav">
+        <div ref="sideNav" id="side-nav">
+            <p id="close-btn" @click="toggleSideNav">
                 <img src="@/assets/images/icon-close.svg" alt="">
             </p>
             <nav>
@@ -19,7 +27,7 @@
             </nav>
         </div>
         <div id="primary-nav">
-            <p id="open-btn" @click="openSideNav">
+            <p id="open-btn" @click="toggleSideNav">
                 <img src="@/assets/images/icon-menu.svg" alt="">
             </p>
             <p class="logo">
@@ -64,8 +72,19 @@ header {
         height: 100vh;
         background: $white;
         padding: 25px;
-        // transform: translateX(-250px);
+        transform: translateX(-250px);
+        transition: transform .5s ease;
+        z-index: 50;
 
+        &.open {
+            transform: translateX(0);
+        }
+
+        p {
+            padding-bottom: 5px;
+            width: 20px;
+            cursor: pointer;
+        }
         nav {
             margin-top: 50px;
 
@@ -83,6 +102,9 @@ header {
         display: flex;
         align-items: center;
         
+        p {
+            cursor: pointer;
+        }
         #desktop-menu {
             display: none;
         }
@@ -93,6 +115,7 @@ header {
     
         p {
             display: inline-block;
+            cursor: pointer;
             margin: 0 10px;
     
             &:last-child {
