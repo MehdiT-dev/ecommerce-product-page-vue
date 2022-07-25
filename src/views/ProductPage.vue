@@ -1,9 +1,12 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+// Importation des composants
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import IconCart from '../components/icons/IconCart.vue';
+// Import des composables
+// import { useCart } from '@/composables/useCart'
 
 // Déclaration du produit
 const product = {
@@ -30,11 +33,17 @@ const product = {
 // Règle le problème d'affichage d'images dynamiquement
 for (let i=0; i<product.pictures.length; i++) {
     product.pictures[i] = require(`@/assets/images/image-product-${i+1}.jpg`);
+    product.thumbnails[i] = require(`@/assets/images/image-product-${i+1}-thumbnail.jpg`);
 }
 
 // Défilement des images du slider
 let pictureIndex = ref(0);
 let timeout = ref(null);
+const thumbnails = ref([]);
+
+onMounted(() => {
+    thumbnails.value[pictureIndex.value].parentElement.classList.add('active');
+});
 const showPrevImage = () => {
     if (timeout.value === true) {
         return;
@@ -65,6 +74,11 @@ const showNextImage = () => {
         }, 50);
     }
 }
+const displaySelectedImg = (e) => {
+    thumbnails.value[pictureIndex.value].parentElement.classList.remove('active');
+    pictureIndex.value = e.target.dataset.pictureNb;
+    e.target.parentElement.classList.add('active');
+}
 
 // Choix du nombre d'articles / Ajout au panier
 let nbProduct = ref(0);
@@ -76,7 +90,8 @@ const increaseNbProduct = () => {
     if (nbProduct.value >= 10) return;
     nbProduct.value = nbProduct.value += 1;
 }
-const addToCart = () => {
+const addToCart = (e) => {
+    console.log(e);
     if (nbProduct.value === 0) {
         console.log('Sélectionner la quantité à ajouter.');
         return;
@@ -88,8 +103,8 @@ const addToCart = () => {
 </script>
 
 <template>
+    <Header/>
     <div id="container">
-        <Header/>
         <div class="product-view">
             <div class="slider">
                 <span @click="showPrevImage" class="prev">
@@ -100,6 +115,11 @@ const addToCart = () => {
                 </span>
                 <div class="picture">
                     <img  :src="product.pictures[pictureIndex]" alt="">
+                </div>
+            </div>
+            <div class="thumbnails">
+                <div v-for="(thumbnail, index) in product.thumbnails" class="thumbnail" :key="index">
+                    <img @click="displaySelectedImg" :data-picture-nb="index" :src="product.thumbnails[index]" ref="thumbnails" alt="">
                 </div>
             </div>
         </div>
@@ -125,18 +145,86 @@ const addToCart = () => {
                 <span>Add to cart</span>
             </a>
         </div>
-        <Footer/>
     </div>
+    <Footer/>
 </template>
 
 <style lang="scss" scoped>
+#container {
+    @include respond('large') {
+        max-width: 1116px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        min-height: calc(100vh - 200px);
+
+        .product-view,
+        .product-description {
+            display: flex;
+            flex-basis: 40%;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .product-view {
+            align-items: center;
+            
+            .slider {
+                height: auto;
+                width: 100%;
+                aspect-ratio: 1/1;
+                border-radius: 15px;
+                overflow: hidden;
+                margin: 30px;
+
+                span {
+                    display: none;
+                }
+            }
+            .thumbnails {
+                display: flex;
+                justify-content: space-between;
+                width: 99%;
+                height: 88px;
+
+                .thumbnail {
+                    width: 88px;
+                    border-radius: 15px;
+                    aspect-ratio: 1/1;
+                    cursor: pointer;
+
+                    &.active {
+                        outline: 2px solid $orange;
+
+                        img {
+                            opacity: .25;
+                        }
+                    }
+
+                    img {
+                        width: auto;
+                        height: 100%;
+                        border-radius: 15px;
+
+                        &:hover {
+                            // filter: saturate(80%)
+                            opacity: .5;
+                        }
+                    }
+                }
+            }
+        }
+        .product-description {
+            display: flex;            
+        }
+    }
+}
 .product-view {
     position: relative;
     overflow: hidden;;
     .slider {
         display: flex;
         height: 300px;
-        width: 400%;
+        width: 100%;
 
         span {
             position: absolute;
