@@ -5,7 +5,6 @@ const sideNav = ref();
 
 const toggleSideNav = function() {
     sideNav.value.classList.toggle('open');
-    // console.log(sideNav.value);
 }
 
 </script>
@@ -104,13 +103,19 @@ header {
         
         p {
             cursor: pointer;
+            margin-right: 15px;
+            
+            &.logo {
+            }
         }
         #desktop-menu {
             display: none;
         }
     }
     #secondary-nav {
-        justify-self: right;
+        // justify-self: right;
+        display: flex;
+        align-items: center;
         height: 20px;
     
         p {
@@ -119,17 +124,85 @@ header {
             margin: 0 10px;
     
             &:last-child {
-                height: 20px;
+                height: 100%;
                 margin-right: 0;
                 img {
-                height: 100%;
+                    height: 100%;
+                    border-radius: 50%;
                 }
             }
         }
     }
-    p {
-        &.logo {
-            margin: 0 15px;
+
+    @include respond ('large') {
+        max-width: 1116px;
+        margin: 0 auto;
+        height: 115px;
+        padding: 0;
+        border: none;
+        border-bottom: 1px solid $grayish-blue;
+
+        #primary-nav {
+            height: 100%;
+            #open-btn {
+                display: none;
+            }
+            p.logo {
+                margin-right: 50px;
+            }
+            #desktop-menu {
+                display: block;
+                height: 100%;
+                line-height: 115px;
+
+                ul {
+                    height: 100%;
+
+                    li {
+                        position: relative;
+                        display: inline-block;
+                        margin-right: 35px;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            display: block;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 0;
+                            border-radius: 5px;
+                            background: $orange;
+                        }
+                        &:hover {
+                            a {
+                                color: $very-vark-blue;
+                            }
+
+                            &::before {
+                                height: 5px;
+                            }
+                        }
+                        
+                        a {
+                            display: inline-block;
+                            text-decoration: none;
+                            color: $dark-grayish-blue;
+                            font-weight: 400;
+                        }
+                    }
+                }
+            }
+        }
+        #secondary-nav {
+            height: 50px;
+            p:last-child {
+                margin-left: 30px;
+
+                img:hover{
+                    outline: 3px solid $orange;
+                }
+            }
         }
     }
 }
