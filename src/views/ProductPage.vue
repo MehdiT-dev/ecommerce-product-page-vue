@@ -135,15 +135,17 @@ const addToCart = (e) => {
             <div v-else class="starting-price">
                 <p class="price">${{ product.startingPrice.toFixed(2) }}</p>
             </div>
-            <div class="input-box">
-                <img @click="decreaseNbProduct" class="minus" src="@/assets/images/icon-minus.svg" alt="">
-                <img @click="increaseNbProduct" class="plus" src="@/assets/images/icon-plus.svg" alt="">
-                <input type="number" disabled :value="nbProduct">
+            <div class="input-container">
+                <div class="input-box">
+                    <img @click="decreaseNbProduct" class="minus" src="@/assets/images/icon-minus.svg" alt="">
+                    <img @click="increaseNbProduct" class="plus" src="@/assets/images/icon-plus.svg" alt="">
+                    <input type="number" disabled :value="nbProduct">
+                </div>
+                <a @click="addToCart" class="btn">
+                    <IconCart class="btn-icon"/>
+                    <span>Add to cart</span>
+                </a>
             </div>
-            <a @click="addToCart" class="btn">
-                <IconCart class="btn-icon"/>
-                <span>Add to cart</span>
-            </a>
         </div>
     </div>
     <Footer/>
@@ -214,7 +216,21 @@ const addToCart = (e) => {
             }
         }
         .product-description {
-            display: flex;            
+            display: flex;
+            
+            .input-container {
+                
+                .input-box,
+                a.btn {
+                    display: inline-block;
+                }
+                .input-box {
+                    width: 40%;
+                }
+                a.btn {
+                    width: 50%;
+                }
+            }
         }
     }
 }
@@ -262,6 +278,9 @@ const addToCart = (e) => {
                 height: auto;
             }
         }
+    }
+    .thumbnails {
+        display: none;
     }
 }
 .product-description {

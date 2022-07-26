@@ -5,7 +5,7 @@
 <template>
     <footer>
         <p>Challenge by <a data-replace="Frontend Mentor" href="https://www.frontendmentor.io?ref=challenge" target="_blank"><span>Frontend Mentor</span></a>.</p>
-        <p>Coded by <a data-replace="Mehdi Tadjer" href="https://github.com/MehdiT-dev" target="_blank">Mehdi Tadjer</a>.</p>
+        <p>Coded by <a data-replace="Mehdi Tadjer" href="https://github.com/MehdiT-dev" target="_blank"><span>Mehdi Tadjer</span></a>.</p>
     </footer>    
 </template>
 
@@ -28,24 +28,30 @@ footer {
         font-weight: 700;
         color: $dark-grayish-blue;
         text-decoration: none;
-        transition: transform .40s ease-in-out;
+        transition: transform 1.40s ease-in-out;
     
-
+        span {
+            display: inline-block;
+            transition: all .3s ease;
+        }
+        &:hover span {
+            transform: translateX(-200px);
+        }
         &::before {
             content: '';
             position: absolute;
-            display: block;
-            top: 0;
+            // display: block;
+            bottom: 0;
             left: 0;
-            height: 100%;
+            height: 2px;
             width: 100%;
-            background: $white;
-            transform: translateY(-200%);
-            transition: transform .10s ease-in-out;
+            background: $orange;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s ease-in-out .3s;
         }
-        &:hover::before,
-        &:focus::before {
-            transform: translateY(0);
+        &:hover::before {
+            transform: scaleX(1);
         }
         &::after {
             content: attr(data-replace);
@@ -56,12 +62,12 @@ footer {
             width: 100%;
             color: $orange;
             transform-origin: 100% 50%;
-            transform: translate3d(200%, 0, 0);
-            transition: transform .15s ease-in-out;
+            transform: translateX(200%);
+            transition: transform .3s ease-in-out;
         }
         &:hover::after,
         &:focus::after {
-            transform: translate3d(0, 0, 0);
+            transform: translateX(0);
         }
     }
 }
