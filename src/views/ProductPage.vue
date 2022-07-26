@@ -163,11 +163,11 @@ const addToCart = (e) => {
         .product-view,
         .product-description {
             display: flex;
-            flex-basis: 40%;
             flex-direction: column;
             justify-content: center;
         }
         .product-view {
+            flex-basis: 40%;
             align-items: center;
             
             .slider {
@@ -176,7 +176,7 @@ const addToCart = (e) => {
                 aspect-ratio: 1/1;
                 border-radius: 15px;
                 overflow: hidden;
-                margin: 30px;
+                margin: 15px;
 
                 span {
                     display: none;
@@ -187,6 +187,7 @@ const addToCart = (e) => {
                 justify-content: space-between;
                 width: 99%;
                 height: 88px;
+                margin: 15px;
 
                 .thumbnail {
                     width: 88px;
@@ -217,18 +218,49 @@ const addToCart = (e) => {
         }
         .product-description {
             display: flex;
+            flex-basis: 43%;
             
+            h2 {
+                font-size: 0.85em;
+            }
+            h1 {
+                font-size: 2.8em;
+                margin-bottom: 32px;
+            }
+            > p {
+                font-size: 1.09em;
+            }
+            .sale-price {
+                flex-direction: column;
+                align-items: flex-start;
+                margin: 10px 0 25px;
+
+                p {
+                    margin-bottom: 10px;
+                }
+            }
             .input-container {
-                
-                .input-box,
-                a.btn {
-                    display: inline-block;
-                }
+                display: flex;
+                justify-content: space-between;
+
                 .input-box {
-                    width: 40%;
+                    flex-basis: 36%;
+
+                    input {
+                        font-size: 1.1em;
+                    }
+                    img {
+
+                        &.minus {
+                            left: 0px;
+                        }
+                        &.plus {
+                            right: 0px;
+                        }
+                    }
                 }
                 a.btn {
-                    width: 50%;
+                    flex-basis: 61%;
                 }
             }
         }
