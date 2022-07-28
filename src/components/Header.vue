@@ -25,6 +25,7 @@ const toggleSideNav = function() {
                 </ul>
             </nav>
         </div>
+        <div id="side-nav-bg"></div>
         <div id="primary-nav">
             <p id="open-btn" @click="toggleSideNav">
                 <img src="@/assets/images/icon-menu.svg" alt="">
@@ -64,7 +65,7 @@ header {
     border: 1px solid $black;
 
     #side-nav {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 250px;
@@ -77,6 +78,21 @@ header {
 
         &.open {
             transform: translateX(0);
+        
+            + #side-nav-bg {
+                display: block;
+            }
+        }
+        + #side-nav-bg {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background: rgba(0, 0, 0, 0.5);
+            transition: transform .5s ease;
+            z-index: 10;
         }
 
         p {
