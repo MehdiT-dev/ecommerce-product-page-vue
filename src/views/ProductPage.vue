@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 // Importation des composants
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import Lightbox from '@/components/Lightbox.vue';
 import IconCart from '../components/icons/IconCart.vue';
 // Import des composables
 // import { useCart } from '@/composables/useCart'
@@ -76,7 +77,7 @@ const showNextImage = () => {
 }
 const displaySelectedImg = (e) => {
     thumbnails.value[pictureIndex.value].parentElement.classList.remove('active');
-    pictureIndex.value = e.target.dataset.pictureNb;
+    pictureIndex.value = Number(e.target.dataset.pictureNb);
     e.target.parentElement.classList.add('active');
 }
 
@@ -100,6 +101,15 @@ const addToCart = (e) => {
         nbProduct.value = 0;
     }
 }
+
+// Gestion lightbox
+let lightboxDisplayed = ref(false);
+const displayLightbox = () => {
+    if (document.body.clientWidth > 1180) {
+        lightboxDisplayed.value = !lightboxDisplayed.value;
+    }
+    console.log(lightboxDisplayed.value);
+}
 </script>
 
 <template>
@@ -114,12 +124,12 @@ const addToCart = (e) => {
                     <img src="@/assets/images/icon-next.svg" alt="">
                 </span>
                 <div class="picture">
-                    <img  :src="product.pictures[pictureIndex]" alt="">
+                    <img @click="displayLightbox" :src="product.pictures[pictureIndex]" alt="">
                 </div>
             </div>
             <div class="thumbnails">
                 <div v-for="(thumbnail, index) in product.thumbnails" class="thumbnail" :key="index">
-                    <img @click="displaySelectedImg" :data-picture-nb="index" :src="product.thumbnails[index]" ref="thumbnails" alt="">
+                    <img @click="displaySelectedImg" :data-picture-nb="index" :src="thumbnail" ref="thumbnails" alt="">
                 </div>
             </div>
         </div>
@@ -149,6 +159,13 @@ const addToCart = (e) => {
         </div>
     </div>
     <Footer/>
+    <Lightbox 
+    @close-lightbox="displayLightbox"
+    :thumbnails="product.thumbnails"
+    :pictures="product.pictures"
+    :lightboxDisplayed="lightboxDisplayed"
+    :pictureIndex="pictureIndex"
+    />
 </template>
 
 <style lang="scss" scoped>
@@ -178,6 +195,9 @@ const addToCart = (e) => {
                 overflow: hidden;
                 margin: 15px;
 
+                .picture {
+                    cursor: pointer;
+                }
                 span {
                     display: none;
                 }
